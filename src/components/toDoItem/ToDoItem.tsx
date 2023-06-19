@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { deleteTodo, updateTodo } from '@/firebase/firebase';
-import { Checkbox, IconButton, ListItem, Typography } from '@mui/material';
+import { Checkbox, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ITodo } from '@/types/ITodo';
 import classes from './todoItem.module.css';
