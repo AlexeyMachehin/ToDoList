@@ -1,9 +1,10 @@
 import { Checkbox, IconButton, ListItem, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteTodo, updateTodo } from '@/firebase/firebase';
+import { ITodo } from '@/types/ITodo';
 import classes from './todoItem.module.css';
 
-export default function ToDoItem({ todo }: { todo: any }) {
+export default function ToDoItem({ todo }: { todo: ITodo }) {
   return (
     <ListItem className={classes.todoItem}>
       <Checkbox

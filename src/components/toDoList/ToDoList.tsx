@@ -15,9 +15,10 @@ import ToDoItem from '../toDoItem/ToDoItem';
 import classes from './toDoList.module.css';
 import React from 'react';
 import TodoInput from '../todoInput/TodoInput';
+import { ITodo } from '@/types/ITodo';
 
 export default function TodoList() {
-  const [todos, setTodos] = useState<any[]>([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   const [sortingType, setSortingType] = useState<SortingType>(SortingType.All);
   const [isLoaderOn, setIsLoaderOn] = useState(false);
 
@@ -33,7 +34,7 @@ export default function TodoList() {
         const todosData = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-        })) as any[];
+        })) as ITodo[];
 
         console.log(todosData);
 
@@ -84,7 +85,7 @@ export default function TodoList() {
 
       <List className={classes.todoList}>
         {sortedTodos.length ? (
-          sortedTodos.map((todo: any) => {
+          sortedTodos.map((todo: ITodo) => {
             return (
               <React.Fragment key={todo.id}>
                 <Divider /> <ToDoItem todo={todo} />
