@@ -1,3 +1,4 @@
+import { ITodo, NewTodo } from '@/types/ITodo';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -23,7 +24,7 @@ const db = getFirestore(app);
 
 export const colRef = collection(db, 'todos');
 
-export async function addTodo(newTodo: any): Promise<void> {
+export async function addTodo(newTodo: NewTodo): Promise<void> {
   try {
     await addDoc(colRef, newTodo);
     toast.success('Todo added successfully!');
@@ -32,7 +33,7 @@ export async function addTodo(newTodo: any): Promise<void> {
   }
 }
 
-export async function deleteTodo(deletedTodo: any): Promise<void> {
+export async function deleteTodo(deletedTodo: ITodo): Promise<void> {
   try {
     await deleteDoc(doc(db, 'todos', deletedTodo.id));
     toast.success('Todo deleted successfully!');
@@ -41,7 +42,10 @@ export async function deleteTodo(deletedTodo: any): Promise<void> {
   }
 }
 
-export async function updateTodo(updatedTodo: any, id: string): Promise<void> {
+export async function updateTodo(
+  updatedTodo: NewTodo,
+  id: string,
+): Promise<void> {
   try {
     await updateDoc(doc(db, 'todos', id), updatedTodo);
     toast.success('Todo updated successfully!');
@@ -50,8 +54,8 @@ export async function updateTodo(updatedTodo: any, id: string): Promise<void> {
   }
 }
 
-export async function deleteAllTodos(todos: any) {
-  const todoPromises = todos.map((todo: any) => {
+export async function deleteAllTodos(todos: ITodo[]) {
+  const todoPromises = todos.map((todo: ITodo) => {
     return deleteDoc(doc(db, 'todos', todo.id));
   });
 
@@ -63,10 +67,10 @@ export async function deleteAllTodos(todos: any) {
   }
 }
 
-export async function deleteCompletedTodos(todos: any) {
-  const completedTodos = todos.filter((todo: any) => todo.isDone === true);
+export async function deleteCompletedTodos(todos: ITodo[]) {
+  const completedTodos = todos.filter((todo: ITodo) => todo.isDone === true);
 
-  const todoPromises = completedTodos.map((todo: any) => {
+  const todoPromises = completedTodos.map((todo: ITodo) => {
     return deleteDoc(doc(db, 'todos', todo.id));
   });
 
