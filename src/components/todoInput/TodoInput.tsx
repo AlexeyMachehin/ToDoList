@@ -1,13 +1,22 @@
+import { memo, useState } from 'react';
 import { addTodo } from '@/firebase/firebase';
 import { TextField } from '@mui/material';
-import { useState } from 'react';
 
-export default function TodoInput() {
+function TodoInput({
+  setIsLoaderOn,
+}: {
+  setIsLoaderOn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [todoInputValue, setTodoInputValue] = useState('');
 
-  const handleEnterKeyDown = (event: { key: string; }) => {
-    if (event.key === 'Enter') {
-      addTodo({ isDone: false, title: todoInputValue });
+  const handleEnterKeyDown = (event: { key: string }) => {
+    if (event.key === 'Enter' && todoInputValue !== '') {
+      setIsLoaderOn(true);
+
+      addTodo({ isDone: false, title: todoInputValue }).finally(() =>
+        setIsLoaderOn(false),
+      );
+
       setTodoInputValue('');
     }
   };
@@ -25,3 +34,5 @@ export default function TodoInput() {
     </>
   );
 }
+
+export default memo(TodoInput);
