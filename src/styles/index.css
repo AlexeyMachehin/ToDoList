@@ -1,0 +1,12 @@
+@import url('./nullstyle.css');
+@import url('./variables.css');
+
+body {
+  min-width: 576px;
+  padding: 30px;
+  background-color: var(--app-background);
+}
+
+.error {
+  color: var(--error-color);
+}
