@@ -1,4 +1,7 @@
-export function group(todos, sortingType) {
+import { ITodo } from '@/types/ITodo';
+import { SortingType } from '@/types/sortingType';
+
+export function group(todos: ITodo[], sortingType: SortingType) {
   if (sortingType === 'all') {
     return todos;
   }
