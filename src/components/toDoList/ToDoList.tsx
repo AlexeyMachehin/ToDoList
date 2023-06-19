@@ -1,14 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
-import { colRef } from '@/firebase/firebase';
+import {
+  deleteAllTodos,
+  colRef,
+  deleteCompletedTodos,
+} from '@/firebase/firebase';
 import Loader from '../loader/Loader';
 import { toast } from 'react-hot-toast';
 import { SortingType } from '@/types/sortingType';
 import Sorting from '../sorting/Sorting';
 import { group } from '@/utils/group';
-import classes from './toDoList.module.css';
-import { Typography } from '@mui/material';
+import { Button, Divider, List, TextField, Typography } from '@mui/material';
 import ToDoItem from '../toDoItem/ToDoItem';
+import classes from './toDoList.module.css';
+import React from 'react';
+import TodoInput from '../todoInput/TodoInput';
 
 export default function TodoList() {
   const [todos, setTodos] = useState<any[]>([]);
@@ -46,22 +52,51 @@ export default function TodoList() {
 
   return (
     <div className={classes.toDoListWrapper}>
+      {/* {!sortedTodos.length || isLoaderOn ? (
+        <Loader isFirstLoad={!sortedTodos.length} />
+      ) : null} */}
+
       <Typography component="h1" variant="h1">
         Todos
       </Typography>
 
       <section className={classes.filters}>
         <Sorting sortingType={sortingType} setSortingType={setSortingType} />
+
+        <Button
+          disabled={!sortedTodos.length}
+          onClick={() => deleteCompletedTodos(todos)}
+          variant="outlined"
+          color="secondary">
+          Clear completed
+        </Button>
+
+        <Button
+          disabled={!sortedTodos.length}
+          onClick={() => deleteAllTodos(todos)}
+          variant="outlined"
+          color="error">
+          Clear all
+        </Button>
       </section>
 
-      <section className={classes.todosList}>
-        {!sortedTodos.length || isLoaderOn ? (
-          <Loader isFirstLoad={!sortedTodos.length} />
-        ) : null}
+      <TodoInput />
 
-        {sortedTodos.length &&
-          sortedTodos.map(todo => <ToDoItem key={todo.id} todo={todo} />)}
-      </section>
+      <List className={classes.todoList}>
+        {sortedTodos.length ? (
+          sortedTodos.map((todo: any) => {
+            return (
+              <React.Fragment key={todo.id}>
+                <Divider /> <ToDoItem todo={todo} />
+              </React.Fragment>
+            );
+          })
+        ) : (
+          <div>No todos</div>
+        )}
+
+        {sortedTodos.length ? <Divider /> : null}
+      </List>
     </div>
   );
 }

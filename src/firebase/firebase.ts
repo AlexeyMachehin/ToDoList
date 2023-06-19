@@ -5,6 +5,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { toast } from 'react-hot-toast';
 
@@ -37,5 +38,42 @@ export async function deleteTodo(deletedTodo: any): Promise<void> {
     toast.success('Todo deleted successfully!');
   } catch (error: unknown) {
     toast.error('Error: could not delete todo');
+  }
+}
+
+export async function updateTodo(updatedTodo: any, id: string): Promise<void> {
+  try {
+    await updateDoc(doc(db, 'todos', id), updatedTodo);
+    toast.success('Todo updated successfully!');
+  } catch (error: unknown) {
+    toast.error('Error: could not update todo');
+  }
+}
+
+export async function deleteAllTodos(todos: any) {
+  const todoPromises = todos.map((todo: any) => {
+    return deleteDoc(doc(db, 'todos', todo.id));
+  });
+
+  try {
+    await Promise.all(todoPromises);
+    toast.success('Todos deleted successfully!');
+  } catch (error) {
+    toast.error('Error: could not delete todos');
+  }
+}
+
+export async function deleteCompletedTodos(todos: any) {
+  const completedTodos = todos.filter((todo: any) => todo.isDone === true);
+
+  const todoPromises = completedTodos.map((todo: any) => {
+    return deleteDoc(doc(db, 'todos', todo.id));
+  });
+
+  try {
+    await Promise.all(todoPromises);
+    toast.success('Completed todos deleted successfully!');
+  } catch (error) {
+    toast.error('Error: could not delete completed todos');
   }
 }
