@@ -5,17 +5,16 @@ import {
   colRef,
   deleteCompletedTodos,
 } from '@/firebase/firebase';
+import { group } from '@/utils/group';
 import Loader from '../loader/Loader';
 import { toast } from 'react-hot-toast';
-import { SortingType } from '@/types/sortingType';
 import Sorting from '../sorting/Sorting';
-import { group } from '@/utils/group';
-import { Button, Divider, List, TextField, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ToDoItem from '../toDoItem/ToDoItem';
-import classes from './toDoList.module.css';
-import React from 'react';
 import TodoInput from '../todoInput/TodoInput';
+import { SortingType } from '@/types/sortingType';
 import { ITodo } from '@/types/ITodo';
+import classes from './toDoList.module.css';
 
 export default function TodoList() {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -27,6 +26,10 @@ export default function TodoList() {
     [todos, sortingType],
   );
 
+  const completedTodos = useMemo(() => {
+    return todos.filter(todo => todo.isDone === true);
+  }, [todos]);
+
   useEffect(() => {
     const todosSnapshotSubscription = onSnapshot(
       colRef,
@@ -35,8 +38,6 @@ export default function TodoList() {
           id: doc.id,
           ...doc.data(),
         })) as ITodo[];
-
-        console.log(todosData);
 
         if (todosData) {
           setTodos(todosData);
@@ -53,9 +54,7 @@ export default function TodoList() {
 
   return (
     <div className={classes.toDoListWrapper}>
-      {/* {!sortedTodos.length || isLoaderOn ? (
-        <Loader isFirstLoad={!sortedTodos.length} />
-      ) : null} */}
+      {isLoaderOn ? <Loader /> : null}
 
       <Typography component="h1" variant="h1">
         Todos
@@ -65,8 +64,11 @@ export default function TodoList() {
         <Sorting sortingType={sortingType} setSortingType={setSortingType} />
 
         <Button
-          disabled={!todos.length}
-          onClick={() => deleteCompletedTodos(todos)}
+          disabled={!completedTodos.length}
+          onClick={() => {
+            setIsLoaderOn(true);
+            deleteCompletedTodos(todos).finally(() => setIsLoaderOn(false));
+          }}
           variant="outlined"
           color="secondary">
           Clear completed
@@ -74,30 +76,27 @@ export default function TodoList() {
 
         <Button
           disabled={!todos.length}
-          onClick={() => deleteAllTodos(todos)}
+          onClick={() => {
+            setIsLoaderOn(true);
+            deleteAllTodos(todos).finally(() => setIsLoaderOn(false));
+          }}
           variant="outlined"
           color="error">
           Clear all
         </Button>
       </section>
 
-      <TodoInput />
+      <TodoInput setIsLoaderOn={setIsLoaderOn} />
 
-      <List className={classes.todoList}>
-        {sortedTodos ? (
+      <ul className={classes.todoList}>
+        {sortedTodos?.length ? (
           sortedTodos.map((todo: ITodo) => {
-            return (
-              <React.Fragment key={todo.id}>
-                <Divider /> <ToDoItem todo={todo} />
-              </React.Fragment>
-            );
+            return <ToDoItem key={todo.id} todo={todo} />;
           })
         ) : (
           <div>No todos</div>
         )}
-
-        {todos.length ? <Divider /> : null}
-      </List>
+      </ul>
     </div>
   );
 }

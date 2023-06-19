@@ -2,17 +2,14 @@ import { ITodo } from '@/types/ITodo';
 import { SortingType } from '@/types/sortingType';
 
 export function group(todos: ITodo[], sortingType: SortingType) {
-  if (sortingType === 'all') {
-    return todos;
-  }
+  switch (sortingType) {
+    case 'all':
+      return todos;
 
-  if (sortingType === 'active') {
-    const result = todos.filter(todo => todo.isDone === false);
-    return result;
-  }
+    case 'active':
+      return todos.filter(todo => !todo.isDone);
 
-  if (sortingType === 'completed') {
-    const result = todos.filter(todo => todo.isDone === true);
-    return result;
+    case 'completed':
+      return todos.filter(todo => todo.isDone);
   }
 }

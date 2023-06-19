@@ -2,4 +2,10 @@
   display: flex;
   justify-content: space-between !important;
   width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.192);
+}
+
+.handler {
+  align-self: flex-start;
 }
