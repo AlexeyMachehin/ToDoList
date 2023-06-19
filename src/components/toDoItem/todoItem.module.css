@@ -1,0 +1,11 @@
+.todoItem {
+  display: flex;
+  justify-content: space-between !important;
+  width: 100%;
+  padding: 10px;
+  border-bottom: var(--todoItemBorder);
+}
+
+.handler {
+  align-self: flex-start;
+}

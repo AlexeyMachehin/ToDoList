@@ -1,15 +1,15 @@
-export function group(todos, sortingType) {
-  if (sortingType === 'all') {
-    return todos;
-  }
+import { ITodo } from '@/types/ITodo';
+import { SortingType } from '@/types/sortingType';
 
-  if (sortingType === 'active') {
-    const result = todos.filter(todo => todo.isDone === false);
-    return result;
-  }
+export function group(todos: ITodo[], sortingType: SortingType) {
+  switch (sortingType) {
+    case 'all':
+      return todos;
 
-  if (sortingType === 'completed') {
-    const result = todos.filter(todo => todo.isDone === true);
-    return result;
+    case 'active':
+      return todos.filter(todo => !todo.isDone);
+
+    case 'completed':
+      return todos.filter(todo => todo.isDone);
   }
 }

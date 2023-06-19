@@ -1,3 +1,4 @@
+import { ITodo, NewTodo } from '@/types/ITodo';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
@@ -5,6 +6,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { toast } from 'react-hot-toast';
 
@@ -22,7 +24,7 @@ const db = getFirestore(app);
 
 export const colRef = collection(db, 'todos');
 
-export async function addTodo(newTodo: any): Promise<void> {
+export async function addTodo(newTodo: NewTodo): Promise<void> {
   try {
     await addDoc(colRef, newTodo);
     toast.success('Todo added successfully!');
@@ -31,11 +33,51 @@ export async function addTodo(newTodo: any): Promise<void> {
   }
 }
 
-export async function deleteTodo(deletedTodo: any): Promise<void> {
+export async function deleteTodo(deletedTodo: ITodo): Promise<void> {
   try {
     await deleteDoc(doc(db, 'todos', deletedTodo.id));
     toast.success('Todo deleted successfully!');
   } catch (error: unknown) {
     toast.error('Error: could not delete todo');
+  }
+}
+
+export async function updateTodo(
+  updatedTodo: NewTodo,
+  id: string,
+): Promise<void> {
+  try {
+    await updateDoc(doc(db, 'todos', id), updatedTodo);
+    toast.success('Todo updated successfully!');
+  } catch (error: unknown) {
+    toast.error('Error: could not update todo');
+  }
+}
+
+export async function deleteAllTodos(todos: ITodo[]) {
+  const todoPromises = todos.map((todo: ITodo) => {
+    return deleteDoc(doc(db, 'todos', todo.id));
+  });
+
+  try {
+    await Promise.all(todoPromises);
+    toast.success('Todos deleted successfully!');
+  } catch (error) {
+    toast.error('Error: could not delete todos');
+  }
+}
+
+export async function deleteCompletedTodos(todos: ITodo[]) {
+  const completedTodos = todos.filter((todo: ITodo) => todo.isDone === true);
+
+  const todoPromises = completedTodos.map((todo: ITodo) => {
+    return deleteDoc(doc(db, 'todos', todo.id));
+  });
+
+  try {
+    await Promise.all(todoPromises);
+    toast.success('Completed todos deleted successfully!');
+  } catch (error) {
+    toast.error('Error: could not delete completed todos');
   }
 }

@@ -12,7 +12,3 @@
   z-index: 999;
   background-color: var(--loader-background);
 }
-
-.firstLoad {
-  background-color: var(--app-background);
-}
