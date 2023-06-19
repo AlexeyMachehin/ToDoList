@@ -65,7 +65,7 @@ export default function TodoList() {
         <Sorting sortingType={sortingType} setSortingType={setSortingType} />
 
         <Button
-          disabled={!sortedTodos.length}
+          disabled={!todos.length}
           onClick={() => deleteCompletedTodos(todos)}
           variant="outlined"
           color="secondary">
@@ -73,7 +73,7 @@ export default function TodoList() {
         </Button>
 
         <Button
-          disabled={!sortedTodos.length}
+          disabled={!todos.length}
           onClick={() => deleteAllTodos(todos)}
           variant="outlined"
           color="error">
@@ -84,7 +84,7 @@ export default function TodoList() {
       <TodoInput />
 
       <List className={classes.todoList}>
-        {sortedTodos.length ? (
+        {sortedTodos ? (
           sortedTodos.map((todo: ITodo) => {
             return (
               <React.Fragment key={todo.id}>
@@ -96,7 +96,7 @@ export default function TodoList() {
           <div>No todos</div>
         )}
 
-        {sortedTodos.length ? <Divider /> : null}
+        {todos.length ? <Divider /> : null}
       </List>
     </div>
   );
