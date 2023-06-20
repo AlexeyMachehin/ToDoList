@@ -8,11 +8,12 @@ import { SortingType } from '@/types/sortingType';
 interface ISelectsProps {
   setSortingType: React.Dispatch<React.SetStateAction<SortingType>>;
   sortingType: SortingType;
+  isDisabled: boolean;
 }
 
-function Sorting({ setSortingType, sortingType }: ISelectsProps) {
+function Sorting({ setSortingType, sortingType, isDisabled }: ISelectsProps) {
   return (
-    <FormControl>
+    <FormControl disabled={isDisabled}>
       <InputLabel id="sorting-label">Sorting</InputLabel>
 
       <Select

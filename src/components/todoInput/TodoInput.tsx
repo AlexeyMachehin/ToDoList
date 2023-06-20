@@ -13,7 +13,7 @@ function TodoInput({
     if (event.key === 'Enter' && todoInputValue !== '') {
       setIsLoaderOn(true);
 
-      addTodo({ isDone: false, title: todoInputValue }).finally(() =>
+      addTodo({ isDone: false, title: todoInputValue.trim() }).finally(() =>
         setIsLoaderOn(false),
       );
 

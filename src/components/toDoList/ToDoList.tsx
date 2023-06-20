@@ -61,7 +61,11 @@ export default function TodoList() {
       </Typography>
 
       <section className={classes.filters}>
-        <Sorting sortingType={sortingType} setSortingType={setSortingType} />
+        <Sorting
+          isDisabled={!todos.length}
+          sortingType={sortingType}
+          setSortingType={setSortingType}
+        />
 
         <Button
           disabled={!completedTodos.length}
