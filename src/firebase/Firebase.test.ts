@@ -13,7 +13,7 @@ describe('Todo Functions', () => {
 
   describe('addTodo', () => {
     it('should add a new todo successfully', async () => {
-      const newTodo = { title: 'New Todo', isDone: false };
+      const newTodo = { title: 'New Todo', isDone: false, date: 1 };
 
       await addTodo(newTodo);
 
@@ -24,7 +24,12 @@ describe('Todo Functions', () => {
 
   describe('deleteTodo', () => {
     it('should delete a todo successfully', async () => {
-      const deletedTodo = { id: '123', title: 'Delete Me', isDone: false };
+      const deletedTodo = {
+        id: '123',
+        title: 'Delete Me',
+        isDone: false,
+        date: 1,
+      };
 
       await deleteTodo(deletedTodo);
 
@@ -37,7 +42,7 @@ describe('Todo Functions', () => {
 
   describe('updateTodo', () => {
     it('should update a todo successfully', async () => {
-      const updatedTodo = { title: 'Updated Todo', isDone: true };
+      const updatedTodo = { title: 'Updated Todo', isDone: true, date: 1 };
       const id = '12334';
 
       await updateTodo(updatedTodo, id);
@@ -52,9 +57,9 @@ describe('Todo Functions', () => {
   describe('deleteAllTodos', () => {
     it('should delete all todos successfully', async () => {
       const todos = [
-        { id: 'todo-1', title: 'Todo 1', isDone: false },
-        { id: 'todo-2', title: 'Todo 2', isDone: true },
-        { id: 'todo-3', title: 'Todo 3', isDone: false },
+        { id: 'todo-1', title: 'Todo 1', isDone: false, date: 1 },
+        { id: 'todo-2', title: 'Todo 2', isDone: true, date: 1 },
+        { id: 'todo-3', title: 'Todo 3', isDone: false, date: 1 },
       ];
 
       await deleteAllTodos(todos);
@@ -69,9 +74,9 @@ describe('Todo Functions', () => {
   describe('deleteCompletedTodos', () => {
     it('should delete completed todos successfully', async () => {
       const todos = [
-        { id: 'todo-1', title: 'Todo 1', isDone: false },
-        { id: 'todo-2', title: 'Todo 2', isDone: true },
-        { id: 'todo-3', title: 'Todo 3', isDone: true },
+        { id: 'todo-1', title: 'Todo 1', isDone: false, date: 1 },
+        { id: 'todo-2', title: 'Todo 2', isDone: true, date: 1 },
+        { id: 'todo-3', title: 'Todo 3', isDone: true, date: 1 },
       ];
 
       await deleteCompletedTodos(todos);
