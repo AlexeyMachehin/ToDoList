@@ -8,8 +8,8 @@
 
 .handlers {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .handler {
@@ -21,3 +21,7 @@
   text-overflow: ellipsis;
 }
 
+.handlersContainer {
+  display: flex;
+  gap: 8px;
+}

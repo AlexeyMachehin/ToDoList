@@ -1,0 +1,10 @@
+.todoInput {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.addTodoButton {
+  max-height: 56px;
+  align-self: flex-end;
+}
