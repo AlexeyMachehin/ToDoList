@@ -95,7 +95,13 @@ export default function TodoList() {
       <ul className={classes.todoList}>
         {sortedTodos?.length ? (
           sortedTodos.map((todo: ITodo) => {
-            return <ToDoItem key={todo.id} todo={todo} />;
+            return (
+              <ToDoItem
+                key={todo.id}
+                todo={todo}
+                setIsLoaderOn={setIsLoaderOn}
+              />
+            );
           })
         ) : (
           <div>No todos</div>
