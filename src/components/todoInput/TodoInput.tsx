@@ -9,13 +9,19 @@ function TodoInput({
 }) {
   const [todoInputValue, setTodoInputValue] = useState('');
 
-  const handleEnterKeyDown = (event: { key: string }) => {
+  const handleEnterKeyDown = (event: {
+    key: string;
+    preventDefault: () => void;
+  }) => {
     if (event.key === 'Enter' && todoInputValue !== '') {
+      event.preventDefault();
       setIsLoaderOn(true);
 
-      addTodo({ isDone: false, title: todoInputValue.trim() }).finally(() =>
-        setIsLoaderOn(false),
-      );
+      addTodo({
+        date: new Date().getTime(),
+        isDone: false,
+        title: todoInputValue.trim(),
+      }).finally(() => setIsLoaderOn(false));
 
       setTodoInputValue('');
     }
@@ -25,6 +31,8 @@ function TodoInput({
     <>
       <TextField
         fullWidth
+        multiline
+        maxRows={20}
         label="Type new todo and press Enter"
         variant="outlined"
         onChange={event => setTodoInputValue(event.target.value)}

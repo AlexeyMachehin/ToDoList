@@ -6,6 +6,18 @@
   border-bottom: var(--todoItemBorder);
 }
 
+.handlers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .handler {
   align-self: flex-start;
 }
+
+.title {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
