@@ -28,7 +28,8 @@
   "include": [
     "src",
     ".eslintrc.json",
-    "vite.config.ts"
+    "vite.config.ts",
+    "jest.config.js"
   ],
   "references": [
     {

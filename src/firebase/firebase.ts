@@ -24,12 +24,12 @@ const db = getFirestore(app);
 
 export const colRef = collection(db, 'todos');
 
-export async function addTodo(newTodo: NewTodo): Promise<void> {
+export async function addTodo(newTodo: NewTodo): Promise<string> {
   try {
     await addDoc(colRef, newTodo);
-    toast.success('Todo added successfully!');
+    return toast.success('Todo added successfully!');
   } catch (error: unknown) {
-    toast.error('Error: could not add new todo');
+    return toast.error('Error: could not add new todo');
   }
 }
 
