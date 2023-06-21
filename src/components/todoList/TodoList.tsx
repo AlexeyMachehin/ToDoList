@@ -20,6 +20,7 @@ export default function TodoList() {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [sortingType, setSortingType] = useState<SortingType>(SortingType.All);
   const [isLoaderOn, setIsLoaderOn] = useState(false);
+  const [editTodoId, setEditTodoId] = useState<string | null>(null);
 
   const sortedTodos = useMemo(
     () => group(todos, sortingType),
@@ -100,6 +101,8 @@ export default function TodoList() {
                 key={todo.id}
                 todo={todo}
                 setIsLoaderOn={setIsLoaderOn}
+                editTodoId={editTodoId}
+                setEditTodoId={setEditTodoId}
               />
             );
           })

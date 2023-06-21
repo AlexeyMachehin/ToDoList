@@ -1,6 +1,8 @@
 import { memo, useState } from 'react';
+import toast from 'react-hot-toast';
 import { addTodo } from '@/firebase/firebase';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import classes from './todoInput.module.css';
 
 function TodoInput({
   setIsLoaderOn,
@@ -9,37 +11,42 @@ function TodoInput({
 }) {
   const [todoInputValue, setTodoInputValue] = useState('');
 
-  const handleEnterKeyDown = (event: {
-    key: string;
-    preventDefault: () => void;
-  }) => {
-    if (event.key === 'Enter' && todoInputValue !== '') {
-      event.preventDefault();
-      setIsLoaderOn(true);
-
-      addTodo({
-        date: new Date().getTime(),
-        isDone: false,
-        title: todoInputValue.trim(),
-      }).finally(() => setIsLoaderOn(false));
-
-      setTodoInputValue('');
+  const handleClickSubmit = () => {
+    if (!todoInputValue) {
+      toast.error('Error: type text in the text field');
+      return;
     }
+
+    setIsLoaderOn(true);
+
+    addTodo({
+      date: new Date().getTime(),
+      isDone: false,
+      title: todoInputValue.trim(),
+    }).finally(() => setIsLoaderOn(false));
+
+    setTodoInputValue('');
   };
 
   return (
-    <>
+    <div className={classes.todoInput}>
       <TextField
         fullWidth
         multiline
         maxRows={20}
-        label="Type new todo and press Enter"
+        label="Type new todo"
         variant="outlined"
-        onChange={event => setTodoInputValue(event.target.value)}
         value={todoInputValue}
-        onKeyDown={handleEnterKeyDown}
+        onChange={event => setTodoInputValue(event.target.value)}
       />
-    </>
+
+      <Button
+        className={classes.addTodoButton}
+        variant="outlined"
+        onClick={handleClickSubmit}>
+        Add todo
+      </Button>
+    </div>
   );
 }
 
