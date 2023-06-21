@@ -1,5 +1,5 @@
 import { Toaster } from 'react-hot-toast';
-import TodoList from './components/toDoList/ToDoList';
+import TodoList from './components/todoList/TodoList';
 import './styles/App.css';
 
 export default function App() {
