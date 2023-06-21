@@ -14,7 +14,7 @@ import ToDoItem from '../toDoItem/ToDoItem';
 import TodoInput from '../todoInput/TodoInput';
 import { SortingType } from '@/types/sortingType';
 import { ITodo } from '@/types/ITodo';
-import classes from './toDoList.module.css';
+import classes from './todoList.module.css';
 
 export default function TodoList() {
   const [todos, setTodos] = useState<ITodo[]>([]);
