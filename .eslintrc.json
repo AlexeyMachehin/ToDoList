@@ -62,8 +62,5 @@
         "react": {
             "version": "detect"
         }
-    },
-    "include": [
-        "jest.config.js"
-    ]
+    }
 }

@@ -2,7 +2,6 @@
 @import url('./variables.css');
 
 body {
-  min-width: 576px;
   padding: 30px;
   background-color: var(--app-background);
 }

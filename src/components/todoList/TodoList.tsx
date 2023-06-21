@@ -20,6 +20,7 @@ export default function TodoList() {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [sortingType, setSortingType] = useState<SortingType>(SortingType.All);
   const [isLoaderOn, setIsLoaderOn] = useState(false);
+  const [editTodoId, setEditTodoId] = useState<string | null>(null);
 
   const sortedTodos = useMemo(
     () => group(todos, sortingType),
@@ -95,7 +96,15 @@ export default function TodoList() {
       <ul className={classes.todoList}>
         {sortedTodos?.length ? (
           sortedTodos.map((todo: ITodo) => {
-            return <ToDoItem key={todo.id} todo={todo} />;
+            return (
+              <ToDoItem
+                key={todo.id}
+                todo={todo}
+                setIsLoaderOn={setIsLoaderOn}
+                editTodoId={editTodoId}
+                setEditTodoId={setEditTodoId}
+              />
+            );
           })
         ) : (
           <div>No todos</div>
