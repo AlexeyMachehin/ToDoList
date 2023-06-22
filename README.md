@@ -1,4 +1,4 @@
-## Вендинговый аппарат
+## Todo list
 
 Ссылка на netlify.com: [Todo List](https://todolist-mindbox.netlify.app)
 
