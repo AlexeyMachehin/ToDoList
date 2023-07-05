@@ -102,6 +102,7 @@ function ToDoItem({
                 <EditIcon />
               </IconButton>
             )}
+
             <IconButton
               className={classes.handler}
               onClick={() => deleteTodo(todo)}

@@ -12,7 +12,7 @@ function TodoInput({
   const [todoInputValue, setTodoInputValue] = useState('');
 
   const handleClickSubmit = () => {
-    if (!todoInputValue) {
+    if (!todoInputValue.trim()) {
       toast.error('Error: type text in the text field');
       return;
     }
